@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter as tk
-import logic
+
 import requests
 
 APIKey = "RGAPI-8a1474d7-373a-45ab-b8b6-65617bd848c8"
@@ -44,15 +43,15 @@ class QuickMatchFinder:
         self.player4.grid(column=0, row=5, sticky=(N, W, E, S))
         self.player5 = ttk.Label(text="summoner5")
         self.player5.grid(column=0, row=6, sticky=(N, W, E, S))
-        self.player6 = ttk.Label(text="summoner5")
+        self.player6 = ttk.Label(text="summoner6")
         self.player6.grid(column=1, row=2, sticky=(N, W, E, S))
-        self.player7 = ttk.Label(text="summoner5")
+        self.player7 = ttk.Label(text="summoner7")
         self.player7.grid(column=1, row=3, sticky=(N, W, E, S))
-        self.player8 = ttk.Label(text="summoner5")
+        self.player8 = ttk.Label(text="summoner8")
         self.player8.grid(column=1, row=4, sticky=(N, W, E, S))
-        self.player9 = ttk.Label(text="summoner5")
+        self.player9 = ttk.Label(text="summoner9")
         self.player9.grid(column=1, row=5, sticky=(N, W, E, S))
-        self.player10 = ttk.Label(text="summoner5")
+        self.player10 = ttk.Label(text="summoner10")
         self.player10.grid(column=1, row=6, sticky=(N, W, E, S))
 
         # small optimization details
@@ -91,11 +90,9 @@ class QuickMatchFinder:
 
                 participants = responseJSON3["participants"]
                 players = []
-                playerRanks = []
                 for player in participants:
                     print(player["summonerName"])
                     players.append(player["summonerName"])
-                    playerRanks.append(player['rank'])
                 # blue team
                 self.player1 = ttk.Label(text=players[0])
                 self.player1.grid(column=0, row=2, sticky=(N, W, E, S))
