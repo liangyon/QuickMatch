@@ -1,12 +1,11 @@
 from tkinter import *
 from tkinter import ttk
+import tkinter as tk
 import logic
 import requests
 
 APIKey = "RGAPI-8a1474d7-373a-45ab-b8b6-65617bd848c8"
 
-
-# asdf
 
 class QuickMatchFinder:
 
@@ -21,17 +20,45 @@ class QuickMatchFinder:
         self.name = StringVar()
         self.name_entry = ttk.Entry(mainframe, width=7, textvariable=self.name)
         self.name_entry.grid(column=2, row=1,
-                             sticky=(W, E))  # sticky at w and e margins
+                             sticky=(N, W, E, S))  # sticky at w and e margins
 
-        ttk.Button(mainframe, text="find",
-                   command=self.find).grid(
+        # button widget
+        submit = ttk.Button(mainframe, text="find",
+                            command=self.find).grid(
             column=3,
-            row=3,
-            sticky=W)
+            row=1,
+            sticky=(N, W, E, S))
+
+        # try greeting
+        # greeting = ttk.Label(text="Welcome to QuickMatch")
+        # greeting.grid(column=1, row=2, sticky=(N, W))
+
+        # try players
+        self.player1 = ttk.Label(text="summoner1")
+        self.player1.grid(column=0, row=2, sticky=(N, W, E, S))
+        self.player2 = ttk.Label(text="summoner2")
+        self.player2.grid(column=0, row=3, sticky=(N, W, E, S))
+        self.player3 = ttk.Label(text="summoner3")
+        self.player3.grid(column=0, row=4, sticky=(N, W, E, S))
+        self.player4 = ttk.Label(text="summoner4")
+        self.player4.grid(column=0, row=5, sticky=(N, W, E, S))
+        self.player5 = ttk.Label(text="summoner5")
+        self.player5.grid(column=0, row=6, sticky=(N, W, E, S))
+        self.player6 = ttk.Label(text="summoner5")
+        self.player6.grid(column=1, row=2, sticky=(N, W, E, S))
+        self.player7 = ttk.Label(text="summoner5")
+        self.player7.grid(column=1, row=3, sticky=(N, W, E, S))
+        self.player8 = ttk.Label(text="summoner5")
+        self.player8.grid(column=1, row=4, sticky=(N, W, E, S))
+        self.player9 = ttk.Label(text="summoner5")
+        self.player9.grid(column=1, row=5, sticky=(N, W, E, S))
+        self.player10 = ttk.Label(text="summoner5")
+        self.player10.grid(column=1, row=6, sticky=(N, W, E, S))
+
+        # small optimization details
         for child in mainframe.winfo_children():
             child.grid_configure(padx=5, pady=5)
         self.name_entry.focus()
-
         root.bind("<Return>", self.find)
 
     def find(self, *args):
@@ -49,21 +76,51 @@ class QuickMatchFinder:
             summonerName = summoner
             responseJSON = self.requestSummonerData(region, summonerName,
                                                     APIKey)
-            print(responseJSON)
+            # print(responseJSON)
             ID = responseJSON['id']
             ID = str(ID)
-            print(ID)
+            # print(ID)
             responseJSON2 = self.requestRankedData(region, ID, APIKey)
-            print(responseJSON2)
-            print(responseJSON2[0]['tier'])
-            print(responseJSON2[0]['rank'])
+            # print(responseJSON2)
+            # print(responseJSON2[0]['tier'])
+            # print(responseJSON2[0]['rank'])
             responseJSON3 = self.requestLiveData(region, ID, APIKey)
-            for item in responseJSON3:
-                print(item + ": " + str(responseJSON3[item]))
+            try:
+                for item in responseJSON3:
+                    print(item + ": " + str(responseJSON3[item]))
 
-            participants = responseJSON3["participants"]
-            for player in participants:
-                print(player["summonerName"])
+                participants = responseJSON3["participants"]
+                players = []
+                playerRanks = []
+                for player in participants:
+                    print(player["summonerName"])
+                    players.append(player["summonerName"])
+                    playerRanks.append(player['rank'])
+                # blue team
+                self.player1 = ttk.Label(text=players[0])
+                self.player1.grid(column=0, row=2, sticky=(N, W, E, S))
+                self.player2 = ttk.Label(text=players[1])
+                self.player2.grid(column=0, row=3, sticky=(N, W, E, S))
+                self.player3 = ttk.Label(text=players[2])
+                self.player3.grid(column=0, row=4, sticky=(N, W, E, S))
+                self.player4 = ttk.Label(text=players[3])
+                self.player4.grid(column=0, row=5, sticky=(N, W, E, S))
+                self.player5 = ttk.Label(text=players[4])
+                self.player5.grid(column=0, row=6, sticky=(N, W, E, S))
+
+                # red team
+                self.player6 = ttk.Label(text=players[5])
+                self.player6.grid(column=1, row=2, sticky=(N, W, E, S))
+                self.player7 = ttk.Label(text=players[6])
+                self.player7.grid(column=1, row=3, sticky=(N, W, E, S))
+                self.player8 = ttk.Label(text=players[7])
+                self.player8.grid(column=1, row=4, sticky=(N, W, E, S))
+                self.player9 = ttk.Label(text=players[8])
+                self.player9.grid(column=1, row=5, sticky=(N, W, E, S))
+                self.player10 = ttk.Label(text=players[9])
+                self.player10.grid(column=1, row=6, sticky=(N, W, E, S))
+            except:
+                print("an error occurred")
 
     @staticmethod
     def requestSummonerData(region, summonerName, Key):
