@@ -64,10 +64,8 @@ class QuickMatchFinder:
 
         summoner = str(self.name.get())
         if summoner is None:
-            print('hah gay')
             pass
         if summoner == '':
-            print('heh gay')
             pass
         else:
             region = "na1"
